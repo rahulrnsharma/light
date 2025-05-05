@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Light - A Streaming Service Documentation</title>
+  <style>
+    /* Reset */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      min-height: 100vh;
+      background: #f6f8fa;
+      color: #222;
+    }
+    /* Sidebar */
+    nav {
+      width: 250px;
+      background: #23272f;
+      color: #fff;
+      padding: 28px 20px 20px 20px;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      box-shadow: 2px 0 12px rgba(44, 62, 80, 0.05);
+      z-index: 10;
+    }
+    nav .logo {
+      width: 140px;
+      display: block;
+      margin: 0 auto 22px auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+      background: #fff;
+      padding: 8px;
+    }
+    nav h2 {
+      margin-top: 0;
+      font-size: 20px;
+      margin-bottom: 24px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid #363c48;
+      padding-bottom: 12px;
+      text-align: center;
+    }
+    nav a {
+      color: #e0e0e0;
+      text-decoration: none;
+      display: block;
+      padding: 10px 14px;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      font-size: 15px;
+      transition: background 0.2s, color 0.2s;
+    }
+    nav a:hover,
+    nav a:focus {
+      background: #313845;
+      color: #fff;
+      outline: none;
+    }
+    nav a.active {
+      background: #1abc9c;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(26,188,156,0.10);
+    }
+  
+    /* Main content */
+    main {
+      margin-left: 250px;
+      padding: 48px 48px 40px 48px;
+      max-width: 900px;
+      flex-grow: 1;
+      background: #fff;
+      box-shadow: 0 4px 32px rgba(44, 62, 80, 0.06);
+      min-height: 100vh;
+    }
+    h1, h2, h3, h4 {
+      color: #23272f;
+      font-weight: 600;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 2.2rem;
+      border-bottom: 2px solid #1abc9c;
+      padding-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    h2 {
+      margin-top: 40px;
+      font-size: 1.5rem;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 8px;
+    }
+    h3 {
+      margin-top: 28px;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #1abc9c;
+    }
+    p, ul, ol {
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+    ul, ol {
+      margin-left: 1.2em;
+    }
+    pre {
+      background: #f4f7fa;
+      padding: 14px 18px;
+      overflow-x: auto;
+      border-radius: 6px;
+      font-size: 15px;
+      color: #23272f;
+      margin-bottom: 18px;
+      border: 1px solid #e2e8f0;
+    }
+    code {
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      background: #f4f7fa;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.97em;
+      color: #2c3e50;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 18px;
+      background: #fafbfc;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(44,62,80,0.03);
+    }
+    th, td {
+      border: 1px solid #e2e8f0;
+      padding: 12px 10px;
+      text-align: left;
+      font-size: 1rem;
+    }
+    th {
+      background: #1abc9c;
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+    tr:nth-child(even) td {
+      background: #f6f8fa;
+    }
+    tr:hover td {
+      background: #eafaf6;
+    }
+    /* Responsive */
+    @media (max-width: 900px) {
+      main {
+        padding: 22px 10px;
+        margin-left: 0;
+        max-width: 100vw;
+      }
+      nav {
+        position: relative;
+        width: 100%;
+        height: auto;
+        box-shadow: none;
+        padding: 18px 10px 10px 10px;
+      }
+      nav .logo {
+        width: 110px;
+        margin-bottom: 16px;
+      }
+    }
+    @media (max-width: 600px) {
+      main {
+        padding: 12px 2vw;
+      }
+      nav {
+        padding: 10px 2vw 10px 2vw;
+      }
+      h1 { font-size: 1.3rem; }
+      h2 { font-size: 1.1rem; }
+      h3 { font-size: 1rem; }
+    }
+  </style>
+  
+</head>
+<body>
+
+  <nav>
+    <img src="logo.png" alt="Light Streaming Logo" class="logo" />
+    <h2>Light Streaming Service</h2>
+    <a href="#overview" class="active">Overview</a>
+    <a href="#features">Features</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#authentication">Authentication API</a>
+    <a href="#stream-apis">Stream Room APIs</a>
+    <a href="#usage">How to Use</a>
+    <a href="#auth-header">Auth Header</a>
+    <a href="#summary">Summary</a>
+  </nav>
+
+  <main>
+    <section id="overview">
+      <h1>Light - A Streaming Service Documentation</h1>
+      <p>
+        Light is a live streaming platform where authenticated users can create stream rooms,
+        and anyone can join streams by searching or using stream keys. The system uses NodeMediaServer and FFmpeg
+        to convert RTMP streams into HLS for HTTP streaming.
+      </p>
+    </section>
+
+    <section id="features">
+      <h2>Key Features</h2>
+      <ul>
+        <li><strong>User Authentication:</strong> Users must register and log in to create stream rooms.</li>
+        <li><strong>Create Stream Room:</strong> Authenticated users create stream rooms with unique stream keys.</li>
+        <li><strong>No Registration Needed to Join:</strong> Anyone can join stream rooms by searching or using the stream key.</li>
+        <li><strong>Share Stream URL or Key:</strong> Stream rooms can be shared via URL or stream key.</li>
+        <li><strong>Join and Leave Rooms:</strong> APIs to join and leave stream rooms.</li>
+      </ul>
+    </section>
+
+    <section id="architecture">
+      <h2>Architecture</h2>
+      <pre>
+          ┌───────────────┐
+          │   Broadcaster │
+          │ (OBS Studio)  │
+          └──────┬────────┘
+                 │
+        RTMP PUSH to: rtmp://yourdomain/live/streamKey
+                 │
+                 ▼
+        ┌─────────────────────┐
+        │  NodeMediaServer    │
+        │  (Node.js Backend)  │
+        └────────┬────────────┘
+                 │
+        ┌────────▼─────────┐
+        │ FFmpeg Transcode │
+        │ (to .m3u8 + .ts) │
+        └────────┬─────────┘
+                 │
+      HLS Segments & Playlist (.ts/.m3u8)
+                 │
+         Stored at ./media/live/streamKey/
+                 │
+        ┌────────▼─────────────┐
+        │  HTTP Streaming API  │
+        │  http://localhost:8000 │
+        └────────┬─────────────┘
+                 │
+         HLS URL to Frontend
+      (http://host/live/streamKey/index.m3u8)
+                 │
+                 ▼
+        ┌─────────────────────┐
+        │     Web Player      │
+        │ (HLS.js + &lt;video&gt;)  │
+        └─────────────────────┘
+      </pre>
+    </section>
+
+    <section id="authentication">
+      <h2>Authentication API</h2>
+
+      <h3>Register User</h3>
+      <p><strong>POST</strong> <code>/auth/register</code></p>
+      <p>Register a new user.</p>
+      <pre><code>{
+  "name": "John Doe",
+  "username": "john@example.com",
+  "password": "strongPassword123",
+  "role": "user"  // optional, default is user
+}</code></pre>
+      <p><strong>Response:</strong></p>
+      <pre><code>{
+  "token": "jwt-token-string"
+}</code></pre>
+
+      <h3>Login User</h3>
+      <p><strong>POST</strong> <code>/auth/login</code></p>
+      <p>Login user and receive JWT token.</p>
+      <pre><code>{
+  "username": "john@example.com",
+  "password": "strongPassword123"
+}</code></pre>
+      <p><strong>Response:</strong></p>
+      <pre><code>{
+  "token": "jwt-token-string"
+}</code></pre>
+    </section>
+
+    <section id="stream-apis">
+      <h2>Stream Room APIs</h2>
+      <p><em>Note: All stream room creation and modification APIs require <code>Authorization</code> header with Bearer token.</em></p>
+
+      <h3>Create Stream Room</h3>
+      <p><strong>POST</strong> <code>/stream/create</code></p>
+      <p><strong>Headers:</strong></p>
+      <pre><code>Authorization: Bearer &lt;jwt-token&gt;</code></pre>
+      <p>Create a new stream room.</p>
+      <pre><code>{
+  "title": "My Live Stream"
+}</code></pre>
+      <p><strong>Response:</strong></p>
+      <pre><code>{
+  "streamKey": "uuid-generated-stream-key",
+  "hlsUrl": "http://localhost:8000/live/streamKey/index.m3u8"
+}</code></pre>
+
+      <h3>Get Available Stream Rooms</h3>
+      <p><strong>GET</strong> <code>/stream</code></p>
+      <p>List all live stream rooms, optionally filter by title.</p>
+      <p><strong>Query Parameters:</strong></p>
+      <ul>
+        <li><code>title</code> (optional): Filter streams by partial title match.</li>
+      </ul>
+      <p><strong>Response:</strong></p>
+      <pre><code>[
+  {
+    "title": "My Live Stream",
+    "streamKey": "uuid-generated-stream-key",
+    "isLive": true
+  }
+]</code></pre>
+
+      <h3>Get Stream Playlist by Stream Key</h3>
+      <p><strong>GET</strong> <code>/stream/:streamKey</code></p>
+      <p>Get the HLS <code>.m3u8</code> playlist for the stream.</p>
+      <p><strong>Response:</strong> Returns HLS playlist file content.</p>
+      <p><strong>Errors:</strong> 404 if stream not found.</p>
+
+      <h3>Join Stream Room</h3>
+      <p><strong>POST</strong> <code>/stream/join</code></p>
+      <pre><code>{
+  "streamKey": "uuid-generated-stream-key",
+  "userId": "user-id"
+}</code></pre>
+      <p>Confirmation or error message.</p>
+
+      <h3>Leave Stream Room</h3>
+      <p><strong>POST</strong> <code>/stream/leave</code></p>
+      <pre><code>{
+  "streamKey": "uuid-generated-stream-key",
+  "userId": "user-id"
+}</code></pre>
+      <p>Confirmation or error message.</p>
+    </section>
+
+    <section id="usage">
+      <h2>How to Use</h2>
+      <ol>
+        <li><strong>User registers or logs in</strong> to get a JWT token.</li>
+        <li><strong>Create stream room</strong> by calling <code>/stream/create</code> with the token.</li>
+        <li><strong>Start streaming</strong> from OBS or other RTMP source to:  
+          <code>rtmp://yourdomain/live/&lt;streamKey&gt;</code></li>
+        <li><strong>Viewers join</strong> streams by searching or using the stream key.</li>
+        <li><strong>Stream is transcoded</strong> to HLS and served via HTTP for playback.</li>
+      </ol>
+    </section>
+
+    <section id="auth-header">
+      <h2>Authentication Header Example</h2>
+      <p>For protected routes, include the token in the request header:</p>
+      <pre><code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</code></pre>
+    </section>
+
+    <section id="summary">
+      <h2>Summary</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>API Endpoint</th>
+            <th>Method</th>
+            <th>Auth Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>/auth/register</td>
+            <td>POST</td>
+            <td>No</td>
+            <td>Register new user</td>
+          </tr>
+          <tr>
+            <td>/auth/login</td>
+            <td>POST</td>
+            <td>No</td>
+            <td>Login user</td>
+          </tr>
+          <tr>
+            <td>/stream/create</td>
+            <td>POST</td>
+            <td>Yes</td>
+            <td>Create new stream room</td>
+          </tr>
+          <tr>
+            <td>/stream</td>
+            <td>GET</td>
+            <td>No</td>
+            <td>List live stream rooms</td>
+          </tr>
+          <tr>
+            <td>/stream/:streamKey</td>
+            <td>GET</td>
+            <td>No</td>
+            <td>Get stream playlist</td>
+          </tr>
+          <tr>
+            <td>/stream/join</td>
+            <td>POST</td>
+            <td>No</td>
+            <td>Join a stream room</td>
+          </tr>
+          <tr>
+            <td>/stream/leave</td>
+            <td>POST</td>
+            <td>No</td>
+            <td>Leave a stream room</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+  </main>
+
+  <script>
+    // Highlight active link and smooth scroll
+    const links = document.querySelectorAll('nav a');
+    function setActiveLink() {
+      let fromTop = window.scrollY + 10;
+      links.forEach(link => {
+        const section = document.querySelector(link.hash);
+        if (
+          section.offsetTop <= fromTop &&
+          section.offsetTop + section.offsetHeight > fromTop
+        ) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+    window.addEventListener('scroll', setActiveLink);
+    // Smooth scroll on click
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.hash);
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    // Initial active link
+    setActiveLink();
+  </script>
+</body>
+</html>

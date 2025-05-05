@@ -1,0 +1,34 @@
+{
+  "name": "light",
+  "version": "1.0.0",
+  "description": "live video streaming platform service built with nodejs and node-media-server with rtmp and obs studio software this is fully backend related service no forntend in this",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "live",
+    "streaming",
+    "stream",
+    "hotstart"
+  ],
+  "author": "rahulrnsharma",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.14.1",
+    "morgan": "^1.10.0",
+    "node-media-server": "^4.0.12",
+    "nodemon": "^3.1.10",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^11.1.0",
+    "winston": "^3.17.0"
+  }
+}
