@@ -14,10 +14,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/light', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect('mongodb://localhost:27017/light');
 
 app.use(
   morgan('combined', {
