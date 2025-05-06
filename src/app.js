@@ -13,8 +13,13 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
-
+app.set('views', path.join(__dirname,'..','docs'))
+app.set('view engine', 'hbs')
 mongoose.connect('mongodb://localhost:27017/light');
+
+app.get('/', function(req, res){ 
+  res.render('docs') 
+}) 
 
 app.use(
   morgan('combined', {
